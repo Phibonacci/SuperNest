@@ -12,17 +12,17 @@ class LevelScene extends Phaser.Scene {
         Background.preload(this)
         Nestling.preload(this)
         Player.preload(this)
+        Food.preload(this)
     }
 
     create() {
         console.log('[Level] Creating')
         this.background = new Background(this)
         this.player = new Player(this)
-        this.nestlings = []
         this.cameras.main.zoom = 1.5
         this.initializeNestlings()
         this.tempNestlingTimer = 0
-        this.initializeFood();
+        this.initializeFood()
     }
 
     update(timestamp, elapsed) {
@@ -44,7 +44,9 @@ class LevelScene extends Phaser.Scene {
     }
 
     addNestling() {
-        this.nestlings.push(new Nestling(this, this.nestlings.length))
+        const nestling = new Nestling(this, this.nestlings.length)
+        this.nestlings.push(nestling)
+        this.physics.add.overlap(this.player.carriedItemSprite, nestling.sprite, () => this.giveFood(nestling), null, null)
     }
 
     initializeFood() {
@@ -55,6 +57,31 @@ class LevelScene extends Phaser.Scene {
     }
 
     addFood() {
-        this.foods.push(new Food(this));
+        const food = new Food(this)
+        this.foods.push(food)
+        this.physics.add.overlap(this.player.sprite, food.sprite, () => this.collectItem(food), null, null)
+    }
+
+    collectItem(food) {
+        if (this.player.isCarryingItem()) {
+            return
+        }
+        const index = this.foods.indexOf(food)
+        if (index < 0) {
+            return
+        }
+        this.foods.splice(index, 1)
+        this.player.takeItem(food)
+    }
+
+    giveFood(nestling) {
+        if (nestling.isDead || !this.player.isCarryingItem()) {
+            return
+        }
+        if (this.player.carriedItem.type !== nestling.requestedFood) {
+            return
+        }
+        nestling.fillStomach()
+        this.player.deleteItem()
     }
 }
