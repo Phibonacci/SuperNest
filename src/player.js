@@ -4,6 +4,10 @@
 const SPEED = 100;
 
 class Player {
+    static preload(scene) {
+        scene.load.spritesheet('bird', 'assets/bird-sheet.png', { frameWidth: 32, frameHeight: 32 })
+    }
+
     constructor(scene) {
         this.sprite = scene.physics.add.sprite(100, 450, 'bird').setVelocity(SPEED, 0).setScale(2)
 

@@ -9,13 +9,9 @@ class LevelScene extends Phaser.Scene {
 
     preload() {
         console.log('[Level] Preloading')
-        this.load.image('bg-cloud', 'assets/bg-cloud.png')
-        this.load.image('bg-ground', 'assets/bg-ground.png')
-        this.load.image('nestling', 'assets/nestling.png')
-        this.load.image('nestling-dead', 'assets/nestling-dead.png')
-        this.load.image('speech-bubble', 'assets/speech-bubble.png')
-        this.load.image('apple', 'assets/apple.png')
-        this.load.spritesheet('bird', 'assets/bird-sheet.png', { frameWidth: 32, frameHeight: 32 })
+        Background.preload(this)
+        Nestling.preload(this)
+        Player.preload(this)
     }
 
     create() {

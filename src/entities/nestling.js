@@ -8,6 +8,12 @@ const STARVATION_TIME = 3000
 const FRUITS = ['apple', 'banana']
 
 class Nestling {
+    static preload(scene) {
+        scene.load.image('nestling', 'assets/nestling.png')
+        scene.load.image('nestling-dead', 'assets/nestling-dead.png')
+        scene.load.image('speech-bubble', 'assets/speech-bubble.png')
+    }
+
     constructor(scene, id) {
         this.id = id
         this.scene = scene
