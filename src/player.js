@@ -18,7 +18,7 @@ class Player {
     }
 
     pointerMove(scene) {
-        const ROTATION_SPEED = Math.PI // 90 deg/s
+        const ROTATION_SPEED = Math.PI // 180 deg/s
         const ROTATION_SPEED_DEGREES = Phaser.Math.RadToDeg(ROTATION_SPEED)
         const TOLERANCE = 0.01 * ROTATION_SPEED
 
@@ -45,5 +45,6 @@ class Player {
     update(scene) {
         this.pointerMove(scene)
         Phaser.Physics.Arcade.ArcadePhysics.prototype.velocityFromRotation(this.sprite.rotation, SPEED, this.sprite.body.velocity)
+        this.sprite.flipY = !(Math.abs(this.sprite.rotation) < Math.PI / 2)
     }
 }
