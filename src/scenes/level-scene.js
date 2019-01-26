@@ -18,7 +18,6 @@ class LevelScene extends Phaser.Scene {
 
     create() {
         console.log('[Level] Creating')
-        this.add.text(0, 0, 'This is the game scene.', { fill: '#fff' })
         this.player = new Player(this)
         this.nestlings = []
         this.addNestling()
