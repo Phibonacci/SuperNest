@@ -6,10 +6,19 @@ const SPEED = 100;
 class Player {
     constructor(scene) {
 
-        this.sprite = scene.physics.add.image(100, 450, 'bird')
+        this.sprite = scene.physics.add.sprite(100, 450, 'bird')
             .setVelocity(SPEED, 0)
         this.direction = { x: 0, y: 0 }
         this.velocity = 0
+        this.animationStarted = false
+
+        scene.anims.create({
+            key: 'fly',
+            frames: scene.anims.generateFrameNumbers('bird', { start: 0, end: 4 }),
+            frameRate: 10,
+            repeat: -1
+        })
+        this.sprite.anims.play('fly', true)
     }
 
     pointerMove() {
