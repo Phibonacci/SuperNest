@@ -4,6 +4,7 @@
 class LevelScene extends Phaser.Scene {
     constructor() {
         super('Level')
+        window.level = this
     }
 
     preload() {
@@ -23,13 +24,15 @@ class LevelScene extends Phaser.Scene {
         this.addNestling()
         this.addNestling()
         this.addNestling()
+        this.cameras.main.zoom = 1.5
     }
 
     update(timestamp, elapsed) {
-        this.player.update()
+        this.player.update(this)
         for (const nestling of this.nestlings) {
             nestling.update(timestamp, elapsed)
         }
+        this.cameras.main.centerOn(this.player.x, this.player.y)
     }
 
     addNestling() {

@@ -6,10 +6,7 @@ const SPEED = 100;
 class Player {
     constructor(scene) {
 
-        this.sprite = scene.physics.add.sprite(100, 450, 'bird')
-            .setVelocity(SPEED, 0)
-        this.direction = { x: 0, y: 0 }
-        this.velocity = 0
+        this.sprite = scene.physics.add.sprite(100, 450, 'bird').setVelocity(SPEED, 0).setScale(2)
         this.animationStarted = false
 
         scene.anims.create({
@@ -19,14 +16,20 @@ class Player {
             repeat: -1
         })
         this.sprite.anims.play('fly', true)
+        this.vector = new Phaser.Math.Vector2()
     }
 
-    pointerMove() {
+    getRelativePointerPosition(scene) {
+        game.input.activePointer
+    }
+
+    pointerMove(scene) {
         const ROTATION_SPEED = 2 * Math.PI / 4; // 90 deg/s
         const ROTATION_SPEED_DEGREES = Phaser.Math.RadToDeg(ROTATION_SPEED);
         const TOLERANCE = 0.01 * ROTATION_SPEED;
 
-        const angleToPointer = Phaser.Math.Angle.BetweenPoints(this.sprite, game.input.activePointer)
+        scene.cameras.main.getWorldPoint(game.input.activePointer.x, game.input.activePointer.y, this.vector)
+        const angleToPointer = Phaser.Math.Angle.BetweenPoints(this.sprite, this.vector)
         const anglePointerRotation = angleToPointer - this.sprite.rotation
         const angleDelta = Math.atan2(Math.sin(anglePointerRotation), Math.cos(anglePointerRotation))
         if (Phaser.Math.Within(angleDelta, 0, TOLERANCE)) {
@@ -37,8 +40,16 @@ class Player {
         }
     }
 
-    update() {
-        this.pointerMove()
+    get x() {
+        return this.sprite.x
+    }
+
+    get y() {
+        return this.sprite.y
+    }
+
+    update(scene) {
+        this.pointerMove(scene)
         Phaser.Physics.Arcade.ArcadePhysics.prototype.velocityFromRotation(this.sprite.rotation, SPEED, this.sprite.body.velocity)
     }
 }
