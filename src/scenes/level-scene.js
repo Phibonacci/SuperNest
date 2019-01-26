@@ -23,6 +23,8 @@ class LevelScene extends Phaser.Scene {
         this.initializeNestlings()
         this.tempNestlingTimer = 0
         this.initializeFood()
+        this.input.on('pointerdown', () => this.onPointerDown())
+        this.input.on('pointerup', () => this.onPointerUp())
     }
 
     update(timestamp, elapsed) {
@@ -36,6 +38,7 @@ class LevelScene extends Phaser.Scene {
             this.tempNestlingTimer = 0
             this.addNestling()
         }
+        this.foods.forEach(food => food.update(elapsed))
     }
 
     initializeNestlings() {
@@ -51,7 +54,7 @@ class LevelScene extends Phaser.Scene {
 
     initializeFood() {
         this.foods = [];
-        for (let i = 0; i < 30; ++i) {
+        for (let i = 0; i < 100; ++i) {
             this.addFood();
         }
     }
@@ -63,7 +66,7 @@ class LevelScene extends Phaser.Scene {
     }
 
     collectItem(food) {
-        if (this.player.isCarryingItem()) {
+        if (!this.isPointerDown || this.player.isCarryingItem()) {
             return
         }
         const index = this.foods.indexOf(food)
@@ -83,5 +86,25 @@ class LevelScene extends Phaser.Scene {
         }
         nestling.fillStomach()
         this.player.deleteItem()
+    }
+
+    onPointerDown() {
+        this.isPointerDown = true;
+    }
+
+    onPointerUp() {
+        this.isPointerDown = false;
+        this.dropItem()
+    }
+
+    dropItem() {
+        if (!this.player.isCarryingItem()) {
+            return
+        }
+        let item = this.player.dropItem()
+        this.foods.push(item)
+        item.sprite.x = this.player.carriedItemSprite.x
+        item.sprite.y = this.player.carriedItemSprite.y
+        console.log(`Dropped item at ${item.sprite.x}, ${item.sprite.y}`)
     }
 }

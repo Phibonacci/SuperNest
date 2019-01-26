@@ -13,7 +13,7 @@ class MainMenuScene extends Phaser.Scene {
 
     create() {
         console.log('[MainMenu] Creating')
-        this.add.text(100, 50, 'SuperNESt', { fill: '#fff' })
+        this.add.text(100, 50, 'Super NESt', { fill: '#fff' })
 
         // TODO: create a button class if we intend to have multiple buttons.
         this.startButton = this.add.text(100, 100, '[ Click to Start ]', { fill: '#fff' })
