@@ -22,6 +22,7 @@ class LevelScene extends Phaser.Scene {
         this.nestlings = []
         this.cameras.main.zoom = 1.5
         this.initializeNestlings()
+        this.initializeFood();
         this.tempNestlingTimer = 0;
     }
 
@@ -45,5 +46,16 @@ class LevelScene extends Phaser.Scene {
 
     addNestling() {
         this.nestlings.push(new Nestling(this, this.nestlings.length))
+    }
+
+    initializeFood() {
+        this.foods = [];
+        for (let i = 0; i < 30; ++i) {
+            this.addFood();
+        }
+    }
+
+    addFood() {
+        this.foods.push(new Food(this));
     }
 }
