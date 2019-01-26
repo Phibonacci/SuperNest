@@ -18,7 +18,7 @@ class MainMenuScene extends Phaser.Scene {
         // TODO: create a button class if we intend to have multiple buttons.
         this.startButton = this.add.text(100, 100, '[ Click to Start ]', { fill: '#fff' });
         this.startButton.setInteractive({ useHandCursor: true });
-        this.startButton.on('pointerdown', () => this.onStartButtonClicked());
+        this.startButton.on('pointerup', () => this.onStartButtonClicked());
         this.startButton.on('pointerover', () => this.onStartButtonHover());
         this.startButton.on('pointerout', () => this.onStartButtonLeave());
     }
