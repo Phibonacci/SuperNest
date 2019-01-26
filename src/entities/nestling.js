@@ -3,7 +3,7 @@
 
 const HUNGER_MIN_TIME = 2000
 const HUNGER_MAX_TIME = 5000
-const STARVATION_TIME = 3000
+const STARVATION_TIME = 10000
 
 const FRUITS = ['apple', 'banana']
 

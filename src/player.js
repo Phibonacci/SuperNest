@@ -53,14 +53,12 @@ class Player {
         this.pointerMove(scene)
         Phaser.Physics.Arcade.ArcadePhysics.prototype.velocityFromRotation(this.sprite.rotation, SPEED, this.sprite.body.velocity)
         this.sprite.flipY = !(Math.abs(this.sprite.rotation) < Math.PI / 2)
-        if (this.carriedItem) {
-            const vx = Math.cos(this.sprite.rotation)
-            const vy = Math.sin(this.sprite.rotation)
-            this.carriedItemSprite.x = this.sprite.x + vx * 45;
-            this.carriedItemSprite.y = this.sprite.y + vy * 45;
-            this.carriedItemSprite.rotation = this.sprite.rotation
-            this.carriedItemSprite.flipY = this.sprite.flipY
-        }
+        const vx = Math.cos(this.sprite.rotation)
+        const vy = Math.sin(this.sprite.rotation)
+        this.carriedItemSprite.x = this.sprite.x + vx * 45;
+        this.carriedItemSprite.y = this.sprite.y + vy * 45;
+        this.carriedItemSprite.rotation = this.sprite.rotation
+        this.carriedItemSprite.flipY = this.sprite.flipY
     }
 
     isCarryingItem() {
@@ -68,6 +66,7 @@ class Player {
     }
 
     takeItem(item) {
+        console.log(`[Player] Taking item ${item.type}`)
         this.carriedItemSprite.visible = true
         this.carriedItemSprite.setTexture(item.type)
         this.carriedItem = item
@@ -79,6 +78,7 @@ class Player {
             return
         }
         const item = this.carriedItem
+        console.log(`[Player] Dropping item ${item.type}`)
         this.carriedItem = null
         this.carriedItemSprite.visible = false
         item.show()
@@ -86,6 +86,7 @@ class Player {
     }
 
     deleteItem() {
+        console.log(`[Player] Deleting item ${this.carriedItem.type}`)
         this.carriedItem.destroy()
         this.carriedItem = null
         this.carriedItemSprite.visible = false
