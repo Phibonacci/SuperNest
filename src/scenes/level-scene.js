@@ -8,13 +8,14 @@ class LevelScene extends Phaser.Scene {
 
     preload() {
         console.log('[Level] Preloading')
-        // TODO load assets
+        this.load.image('nestling', 'assets/nestling.png')
     }
 
     create() {
         console.log('[Level] Creating')
         this.add.text(0, 0, 'This is the game scene.', { fill: '#fff' })
-        // TODO create entities
+        this.nestlings = []
+        this.nestlings.push(new Nestling(this))
     }
 
     update(timestamp, elapsed) {
