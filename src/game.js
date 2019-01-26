@@ -14,10 +14,10 @@ class Game extends Phaser.Game {
                 default: "arcade",
                 arcade: {
                   debug: true,
-                  fps: 100
-                }
-              },
-        };
+                  fps: 100,
+                },
+            },
+        }
         super(config)
     }
 }
