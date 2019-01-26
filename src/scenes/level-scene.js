@@ -21,7 +21,6 @@ class LevelScene extends Phaser.Scene {
         this.player = new Player(this)
         this.cameras.main.zoom = 1.5
         this.initializeNestlings()
-        this.tempNestlingTimer = 0
         this.initializeFood()
         this.input.on('pointerdown', () => this.onPointerDown())
         this.input.on('pointerup', () => this.onPointerUp())
@@ -33,16 +32,14 @@ class LevelScene extends Phaser.Scene {
             nestling.update(timestamp, elapsed)
         }
         this.cameras.main.centerOn(this.player.x, this.player.y)
-        this.tempNestlingTimer += elapsed;
-        if (this.tempNestlingTimer > 1400) {
-            this.tempNestlingTimer = 0
-            this.addNestling()
-        }
         this.foods.forEach(food => food.update(elapsed))
     }
 
     initializeNestlings() {
         this.nestlings = []
+        this.addNestling()
+        this.addNestling()
+        this.addNestling()
         this.addNestling()
     }
 

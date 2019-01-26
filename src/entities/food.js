@@ -26,11 +26,12 @@ class Food {
             this.sprite.y += this.velocityY * elapsed
         } else {
             this.velocityY = 0
-            this.sprite.y = 16
+            this.sprite.y = -16
         }
     }
 
     show() {
+        this.velocityY = 0
         this.sprite.visible = true
     }
 

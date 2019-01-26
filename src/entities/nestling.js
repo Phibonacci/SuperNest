@@ -1,9 +1,9 @@
 // SuperNest - nestling entity
 'use strict'
 
-const HUNGER_MIN_TIME = 2000
-const HUNGER_MAX_TIME = 5000
-const STARVATION_TIME = 10000
+const HUNGER_MIN_TIME = 1000
+const HUNGER_MAX_TIME = 10000
+const STARVATION_TIME = 15000
 
 class Nestling {
     static preload(scene) {
@@ -15,7 +15,7 @@ class Nestling {
     constructor(scene, id) {
         this.id = id
         this.scene = scene
-        this.sprite = scene.physics.add.sprite(150 + id * 75, 100, 'nestling')
+        this.sprite = scene.physics.add.sprite(id * 75, -400, 'nestling')
         this.sprite.depth = -10
         this.speechBubble = scene.add.sprite(this.sprite.x + 30, this.sprite.y - 50, 'speech-bubble')
         this.speechBubble.depth = 10

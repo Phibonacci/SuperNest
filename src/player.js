@@ -1,15 +1,13 @@
 // SuperNest - player
 'use strict'
 
-const SPEED = 100;
-
 class Player {
     static preload(scene) {
         scene.load.spritesheet('bird', 'assets/bird-sheet.png', { frameWidth: 32, frameHeight: 32 })
     }
 
     constructor(scene) {
-        this.sprite = scene.physics.add.sprite(100, 450, 'bird').setVelocity(SPEED, 0).setScale(2)
+        this.sprite = scene.physics.add.sprite(0, -400, 'bird').setScale(2)
         this.carriedItemSprite = scene.physics.add.sprite(0, 0, 'apple')
         this.carriedItemSprite.visible = false
         this.carriedItem = null
@@ -50,11 +48,15 @@ class Player {
     }
 
     update(scene) {
-        this.pointerMove(scene)
-        Phaser.Physics.Arcade.ArcadePhysics.prototype.velocityFromRotation(this.sprite.rotation, SPEED, this.sprite.body.velocity)
-        this.sprite.flipY = !(Math.abs(this.sprite.rotation) < Math.PI / 2)
         const vx = Math.cos(this.sprite.rotation)
         const vy = Math.sin(this.sprite.rotation)
+        this.pointerMove(scene)
+        const speed = (2 + vy) * 200
+        Phaser.Physics.Arcade.ArcadePhysics.prototype.velocityFromRotation(this.sprite.rotation, speed, this.sprite.body.velocity)
+        this.sprite.flipY = !(Math.abs(this.sprite.rotation) < Math.PI / 2)
+        if (this.sprite.y > 0) {
+            this.sprite.y = 0
+        }
         this.carriedItemSprite.x = this.sprite.x + vx * 45;
         this.carriedItemSprite.y = this.sprite.y + vy * 45;
         this.carriedItemSprite.rotation = this.sprite.rotation
