@@ -19,10 +19,8 @@ class LevelScene extends Phaser.Scene {
         console.log('[Level] Creating')
         this.add.text(0, 0, 'This is the game scene.', { fill: '#fff' })
         this.player = new Player(this)
-        this.nestlings = []
-        this.addNestling()
-        this.addNestling()
-        this.addNestling()
+        this.initializeNestlings()
+        this.tempNestlingTimer = 0;
     }
 
     update(timestamp, elapsed) {
@@ -30,6 +28,16 @@ class LevelScene extends Phaser.Scene {
         for (const nestling of this.nestlings) {
             nestling.update(timestamp, elapsed)
         }
+        this.tempNestlingTimer += elapsed;
+        if (this.tempNestlingTimer > 1400) {
+            this.tempNestlingTimer = 0;
+            this.addNestling();
+        }
+    }
+
+    initializeNestlings() {
+        this.nestlings = []
+        this.addNestling()
     }
 
     addNestling() {
