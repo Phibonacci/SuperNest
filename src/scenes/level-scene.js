@@ -24,6 +24,9 @@ class LevelScene extends Phaser.Scene {
         this.initializeFood()
         this.input.on('pointerdown', () => this.onPointerDown())
         this.input.on('pointerup', () => this.onPointerUp())
+        this.tempNestlingTimer = 0
+        this.cameras.main.startFollow(this.player.sprite, false, 0.225, 0.225)
+        this.cameras.main.setBounds(-50000, -50000, 100000, 50000)
     }
 
     update(timestamp, elapsed) {
@@ -31,8 +34,14 @@ class LevelScene extends Phaser.Scene {
         for (const nestling of this.nestlings) {
             nestling.update(timestamp, elapsed)
         }
-        this.cameras.main.centerOn(this.player.x, this.player.y)
+        //this.cameras.main.centerOn(this.player.x, this.player.y)
         this.foods.forEach(food => food.update(elapsed))
+        this.tempNestlingTimer += elapsed;
+        if (this.tempNestlingTimer > 1400) {
+            this.tempNestlingTimer = 0
+            this.addNestling()
+        }
+        this.background.update(this)
     }
 
     initializeNestlings() {
