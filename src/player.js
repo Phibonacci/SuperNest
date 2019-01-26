@@ -5,28 +5,22 @@ const SPEED = 100;
 
 class Player {
     constructor(scene) {
-
         this.sprite = scene.physics.add.sprite(100, 450, 'bird').setVelocity(SPEED, 0).setScale(2)
-        this.animationStarted = false
 
         scene.anims.create({
             key: 'fly',
             frames: scene.anims.generateFrameNumbers('bird', { start: 0, end: 4 }),
             frameRate: 10,
-            repeat: -1
+            repeat: -1,
         })
         this.sprite.anims.play('fly', true)
         this.vector = new Phaser.Math.Vector2()
     }
 
-    getRelativePointerPosition(scene) {
-        game.input.activePointer
-    }
-
     pointerMove(scene) {
-        const ROTATION_SPEED = 2 * Math.PI / 4; // 90 deg/s
-        const ROTATION_SPEED_DEGREES = Phaser.Math.RadToDeg(ROTATION_SPEED);
-        const TOLERANCE = 0.01 * ROTATION_SPEED;
+        const ROTATION_SPEED = Math.PI // 90 deg/s
+        const ROTATION_SPEED_DEGREES = Phaser.Math.RadToDeg(ROTATION_SPEED)
+        const TOLERANCE = 0.01 * ROTATION_SPEED
 
         scene.cameras.main.getWorldPoint(game.input.activePointer.x, game.input.activePointer.y, this.vector)
         const angleToPointer = Phaser.Math.Angle.BetweenPoints(this.sprite, this.vector)

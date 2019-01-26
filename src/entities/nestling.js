@@ -12,9 +12,12 @@ class Nestling {
         this.id = id
         this.scene = scene
         this.sprite = scene.add.sprite(150 + id * 75, 100, 'nestling')
+        this.sprite.depth = -10
         this.speechBubble = scene.add.sprite(this.sprite.x + 30, this.sprite.y - 50, 'speech-bubble')
+        this.speechBubble.depth = 10
         this.speechBubble.visible = false
         this.foodSprite = scene.add.sprite(this.speechBubble.x, this.speechBubble.y - 5, 'apple')
+        this.foodSprite.depth = 10
         this.foodSprite.visible = false
         this.isDead = false
         this.fillStomach()

@@ -20,10 +20,9 @@ class LevelScene extends Phaser.Scene {
         console.log('[Level] Creating')
         this.player = new Player(this)
         this.nestlings = []
-        this.addNestling()
-        this.addNestling()
-        this.addNestling()
         this.cameras.main.zoom = 1.5
+        this.initializeNestlings()
+        this.tempNestlingTimer = 0;
     }
 
     update(timestamp, elapsed) {
@@ -32,6 +31,16 @@ class LevelScene extends Phaser.Scene {
             nestling.update(timestamp, elapsed)
         }
         this.cameras.main.centerOn(this.player.x, this.player.y)
+        this.tempNestlingTimer += elapsed;
+        if (this.tempNestlingTimer > 1400) {
+            this.tempNestlingTimer = 0;
+            this.addNestling();
+        }
+    }
+
+    initializeNestlings() {
+        this.nestlings = []
+        this.addNestling()
     }
 
     addNestling() {
