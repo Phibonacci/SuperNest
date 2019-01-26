@@ -1,4 +1,4 @@
 // SuperNest - main file
-'use strict';
+'use strict'
 
-this.game = new Game();
+this.game = new Game()
