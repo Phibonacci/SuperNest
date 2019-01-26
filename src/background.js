@@ -28,7 +28,6 @@ class Background {
 
     update(scene)  {
         scene.cameras.main.getWorldPoint(this.cloudImage.width / 2,this.cloudImage.height / 2, this.currentAnchor)
-        console.log(this.currentAnchor)
         this.updateCloud(scene)
         this.updateGround(scene)
     }
