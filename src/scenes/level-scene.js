@@ -9,21 +9,20 @@ class LevelScene extends Phaser.Scene {
 
     preload() {
         console.log('[Level] Preloading')
-        this.load.image('nestling', 'assets/nestling.png')
-        this.load.image('nestling-dead', 'assets/nestling-dead.png')
-        this.load.image('speech-bubble', 'assets/speech-bubble.png')
-        this.load.image('apple', 'assets/apple.png')
-        this.load.spritesheet('bird', 'assets/bird-sheet.png', { frameWidth: 32, frameHeight: 32 })
+        Background.preload(this)
+        Nestling.preload(this)
+        Player.preload(this)
     }
 
     create() {
         console.log('[Level] Creating')
+        this.background = new Background(this)
         this.player = new Player(this)
         this.nestlings = []
         this.cameras.main.zoom = 1.5
         this.initializeNestlings()
+        this.tempNestlingTimer = 0
         this.initializeFood();
-        this.tempNestlingTimer = 0;
     }
 
     update(timestamp, elapsed) {
@@ -34,8 +33,8 @@ class LevelScene extends Phaser.Scene {
         this.cameras.main.centerOn(this.player.x, this.player.y)
         this.tempNestlingTimer += elapsed;
         if (this.tempNestlingTimer > 1400) {
-            this.tempNestlingTimer = 0;
-            this.addNestling();
+            this.tempNestlingTimer = 0
+            this.addNestling()
         }
     }
 
