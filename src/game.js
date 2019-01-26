@@ -11,10 +11,9 @@ class Game extends Phaser.Game {
             scene: [ MainMenuScene, LevelScene ],
             pixelArt: true,
             physics: {
-                default: "arcade",
+                default: 'arcade',
                 arcade: {
                   debug: true,
-                  fps: 100,
                 },
             },
         }
