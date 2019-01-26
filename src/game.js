@@ -10,6 +10,13 @@ class Game extends Phaser.Game {
             // The first scene is loaded automatically upon the game start.
             scene: [ MainMenuScene, LevelScene ],
             pixelArt: true,
+            physics: {
+                default: "arcade",
+                arcade: {
+                  debug: true,
+                  fps: 100
+                }
+              },
         };
         super(config)
     }
