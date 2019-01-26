@@ -6,6 +6,8 @@ const SPEED = 100;
 class Player {
     constructor(scene) {
         this.sprite = scene.physics.add.sprite(100, 450, 'bird').setVelocity(SPEED, 0).setScale(2)
+        this.carriedItem = scene.add.sprite(0, 0, 'apple')
+        this.carriedItem.visible = true
 
         scene.anims.create({
             key: 'fly',
@@ -46,5 +48,11 @@ class Player {
         this.pointerMove(scene)
         Phaser.Physics.Arcade.ArcadePhysics.prototype.velocityFromRotation(this.sprite.rotation, SPEED, this.sprite.body.velocity)
         this.sprite.flipY = !(Math.abs(this.sprite.rotation) < Math.PI / 2)
+        const vx = Math.cos(this.sprite.rotation)
+        const vy = Math.sin(this.sprite.rotation)
+        this.carriedItem.x = this.sprite.x + vx * 45;
+        this.carriedItem.y = this.sprite.y + vy * 45;
+        this.carriedItem.rotation = this.sprite.rotation
+        this.carriedItem.flipY = this.sprite.flipY
     }
 }
