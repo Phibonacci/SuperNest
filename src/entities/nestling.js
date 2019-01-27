@@ -10,6 +10,7 @@ class Nestling {
         scene.load.image('nestling', 'assets/nestling.png')
         scene.load.image('nestling-dead', 'assets/nestling-dead.png')
         scene.load.image('speech-bubble', 'assets/speech-bubble.png')
+        scene.load.image('danger-bubble', 'assets/danger-bubble.png')
     }
 
     constructor(scene, id) {
@@ -19,14 +20,18 @@ class Nestling {
         this.sprite.depth = -10
         this.speechBubble = scene.add.sprite(this.sprite.x + 30, this.sprite.y - 50, 'speech-bubble')
         this.speechBubble.depth = 10
+        this.dangerBubble = scene.add.sprite(this.sprite.x + 30, this.sprite.y - 50, 'danger-bubble')
+        this.dangerBubble.depth = 11
         this.foodSprite = scene.add.sprite(this.speechBubble.x, this.speechBubble.y - 5, 'apple')
-        this.foodSprite.depth = 10
+        this.foodSprite.depth = 12
         this.isDead = false
         this.fillStomach()
     }
 
     update(timestamp, elapsed) {
         if (!this.isDead) {
+            const elapsedPercent = this.hunger / STARVATION_TIME;
+            this.dangerBubble.setCrop(0, elapsedPercent * 48, 48, 48 - elapsedPercent * 48)
             this.hunger -= elapsed
             if (this.hunger < 0) {
                 if (!this.isStarving) {
@@ -43,6 +48,7 @@ class Nestling {
         this.isStarving = false
         this.requestedFood = null
         this.speechBubble.visible = false
+        this.dangerBubble.visible = false
         this.foodSprite.visible = false
         this.hunger = Phaser.Math.Between(HUNGER_MIN_TIME, HUNGER_MAX_TIME)
     }
@@ -53,6 +59,7 @@ class Nestling {
         this.hunger = STARVATION_TIME
         this.requestedFood = FRUITS[Phaser.Math.Between(0, FRUITS.length - 1)]
         this.speechBubble.visible = true
+        this.dangerBubble.visible = true
         this.foodSprite.setTexture(this.requestedFood)
         this.foodSprite.visible = true
     }
@@ -61,6 +68,7 @@ class Nestling {
         console.log(`[Nestling ${this.id}] Dying of starvation`)
         this.isDead = true
         this.speechBubble.visible = false
+        this.dangerBubble.visible = false
         this.foodSprite.visible = false
         this.sprite.setTexture('nestling-dead')
     }
