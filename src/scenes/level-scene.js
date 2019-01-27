@@ -45,7 +45,7 @@ class LevelScene extends Phaser.Scene {
         let aliveNestlings = 0
         for (const nestling of this.nestlings) {
             nestling.update(elapsed)
-            if (!nestling.isDead) {
+            if (!nestling.isDead && !nestling.isFlyingAway) {
                 aliveNestlings += 1
             }
         }

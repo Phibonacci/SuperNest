@@ -10,6 +10,7 @@ class HudScene extends Phaser.Scene {
     preload() {
         console.log('[HUD] Preloading')
         CompassArrow.preload(this)
+        this.load.image('check-mark', 'assets/check-mark.png')
     }
 
     create() {
@@ -29,6 +30,7 @@ class HudScene extends Phaser.Scene {
             const y = 80
             const headSprite = this.add.sprite(x, y, 'nestling')
             headSprite.isDead = false
+            headSprite.isFlyingAway = false
             this.nestlingHeads.push(headSprite)
             this.speechBubbles.push(new SpeechBubble(this, nestling, x, y))
         })
@@ -40,6 +42,10 @@ class HudScene extends Phaser.Scene {
             if (nestling.isDead !== this.nestlingHeads[index].isDead) {
                 this.nestlingHeads[index].isDead = nestling.isDead
                 this.nestlingHeads[index].setTexture(nestling.isDead ? 'nestling-dead' : 'nestling')
+            }
+            if (nestling.isFlyingAway !== this.nestlingHeads[index].isFlyingAway) {
+                this.nestlingHeads[index].isFlyingAway = nestling.isFlyingAway
+                this.nestlingHeads[index].setTexture(nestling.isFlyingAway ? 'check-mark' : 'nestling')
             }
         })
         this.speechBubbles.forEach(x => x.update())
