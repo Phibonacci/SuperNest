@@ -66,7 +66,7 @@ class LevelScene extends Phaser.Scene {
         }
         if (this.gameOverStarted) {
             this.gameOverTimer -= elapsed
-            this.music.volume = this.gameOverTimer / GAME_OVER_FADEOUT
+            this.music.volume = (this.gameOverTimer / GAME_OVER_FADEOUT) * 0.3
             if (this.gameOverTimer < 0) {
                 console.log(`[Level] Game over fade done, reloading main menu`)
                 this.music.stop()
