@@ -10,6 +10,7 @@ class CompassArrow {
         this.scene = scene
         this.sprite = scene.add.sprite(0, 0, 'compass')
         this.sprite.setScrollFactor(0, 0)
+        this.sprite.depth = 100
     }
 
     update(playerX, playerY) {
