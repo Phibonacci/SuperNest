@@ -18,7 +18,7 @@ class Food {
             this.type = 'egg'
         }
         let x = Phaser.Math.Between(-100, 100) * 50 + Phaser.Math.Between(-10, 10)
-        let y = -16
+        let y = -32
         this.sprite = scene.physics.add.sprite(x, y, this.type)
         this.sprite.depth = -10
         this.velocityY = 0
@@ -26,13 +26,13 @@ class Food {
     }
 
     update(elapsed) {
-        if (this.sprite.y < -16) {
+        if (this.sprite.y < -32) {
             this.velocityY += elapsed * 0.001
             this.sprite.y += this.velocityY * elapsed
             this.isFalling = true
         } else {
             this.velocityY = 0
-            this.sprite.y = -16
+            this.sprite.y = -32
             this.isFalling = false
         }
     }

@@ -123,7 +123,7 @@ class LevelScene extends Phaser.Scene {
             if (Math.abs(x - existingTree.x) < 200) return
         }
         const scale = Math.random() * 0.5 + 0.5
-        const tree = this.add.sprite(x, 0, 'small-tree').setOrigin(0.5, 1).setScale(scale)
+        const tree = this.add.sprite(x, -16, 'small-tree').setOrigin(0.5, 1).setScale(scale)
         tree.depth = -100
         this.trees.push(tree)
         const spawnAreaStartX = x - 100 * scale
