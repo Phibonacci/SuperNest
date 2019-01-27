@@ -17,16 +17,19 @@ class Food {
         let y = -16
         this.sprite = scene.physics.add.sprite(x, y, this.type)
         this.sprite.depth = -10
-        this.velocityY = 0;
+        this.velocityY = 0
+        this.isFalling = false
     }
 
     update(elapsed) {
         if (this.sprite.y < -16) {
             this.velocityY += elapsed * 0.001
             this.sprite.y += this.velocityY * elapsed
+            this.isFalling = true
         } else {
             this.velocityY = 0
             this.sprite.y = -16
+            this.isFalling = false
         }
     }
 

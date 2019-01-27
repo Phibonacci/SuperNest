@@ -3,7 +3,8 @@
 
 const HUNGER_MIN_TIME = 1000
 const HUNGER_MAX_TIME = 10000
-const STARVATION_TIME = 15000
+const STARVATION_MIN_TIME = 15000
+const STARVATION_MAX_TIME = 30000
 
 class Nestling {
     static preload(scene) {
@@ -28,9 +29,9 @@ class Nestling {
         this.fillStomach()
     }
 
-    update(timestamp, elapsed) {
+    update(elapsed) {
         if (!this.isDead) {
-            const elapsedPercent = this.hunger / STARVATION_TIME;
+            const elapsedPercent = this.hunger / this.starvationTime;
             this.dangerBubble.setCrop(0, elapsedPercent * 48, 48, 48 - elapsedPercent * 48)
             this.hunger -= elapsed
             if (this.hunger < 0) {
@@ -56,7 +57,8 @@ class Nestling {
     askForFood() {
         console.log(`[Nestling ${this.id}] Asking for food`)
         this.isStarving = true;
-        this.hunger = STARVATION_TIME
+        this.starvationTime = Phaser.Math.Between(STARVATION_MIN_TIME, STARVATION_MAX_TIME)
+        this.hunger = this.starvationTime
         this.requestedFood = FRUITS[Phaser.Math.Between(0, FRUITS.length - 1)]
         this.speechBubble.visible = true
         this.dangerBubble.visible = true
