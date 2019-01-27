@@ -16,6 +16,7 @@ class LevelScene extends Phaser.Scene {
         Nestling.preload(this)
         Player.preload(this)
         Food.preload(this)
+        this.load.image('small-tree', 'assets/small-tree.png')
         this.load.audio('take-item', 'assets/take-item.wav')
         this.load.audio('drop-item', 'assets/drop-item.wav')
     }
@@ -91,8 +92,12 @@ class LevelScene extends Phaser.Scene {
     initializeFood() {
         this.staticFoods = []
         this.fallingFoods = []
-        for (let i = 0; i < 100; ++i) {
+        for (let i = 0; i < 50; ++i) {
             this.addFood()
+        }
+        this.trees = []
+        for (let i = 0; i < 50; ++i) {
+            this.spawnTree()
         }
     }
 
@@ -102,6 +107,29 @@ class LevelScene extends Phaser.Scene {
         this.physics.add.overlap(this.player.sprite, food.sprite, () => this.collectItem(food), null, null)
         for (const nestling of this.nestlings) {
             this.physics.add.overlap(nestling.sprite, food.sprite, () => this.eatFallingFood(nestling, food), null, null)
+        }
+        return food
+    }
+
+    spawnTree() {
+        const x = Phaser.Math.Between(-5000, 5000)
+        if (Math.abs(x) < 500) return
+        for (const existingTree of this.trees) {
+            if (Math.abs(x - existingTree.x) < 200) return
+        }
+        const scale = Math.random() * 0.5 + 0.5
+        const tree = this.add.sprite(x, 0, 'small-tree').setOrigin(0.5, 1).setScale(scale)
+        tree.depth = -100
+        this.trees.push(tree)
+        const spawnAreaStartX = x - 100 * scale
+        const spawnAreaEndX = x + 100 * scale
+        const spawnAreaStartY = -550 * scale
+        const spawnAreaEndY = -250 * scale
+        const nbFood = Phaser.Math.Between(1, 7)
+        for (let i = 0; i < nbFood; ++i) {
+            const food = this.addFood();
+            food.sprite.x = Phaser.Math.Between(spawnAreaStartX, spawnAreaEndX)
+            food.sprite.y = Phaser.Math.Between(spawnAreaStartY, spawnAreaEndY)
         }
     }
 
