@@ -4,9 +4,11 @@
 class Player {
     static preload(scene) {
         scene.load.spritesheet('bird', 'assets/bird-sheet.png', { frameWidth: 64, frameHeight: 64 })
+        scene.load.audio('hit', 'assets/hit.wav')
     }
 
     constructor(scene) {
+        this.scene = scene
         this.sprite = scene.physics.add.sprite(0, -400, 'bird')
         this.carriedItemSprite = scene.physics.add.sprite(0, 0, 'apple')
         this.carriedItemSprite.visible = false
@@ -42,9 +44,12 @@ class Player {
     }
 
     impact() {
-        this.slowTimer = 3000
-        this.speedModifier = 0.4
-        console.log("slow")
+        if (this.slowTimer <= 0) {
+            this.sprite.tint = 0xc05050
+            this.slowTimer = 3000
+            this.speedModifier = 0.4
+            this.scene.sound.play('hit')
+        }
     }
 
     get x() {
@@ -59,6 +64,7 @@ class Player {
         if (this.slowTimer > 0) {
             this.slowTimer -= elapsed
             if (this.slowTimer <= 0) {
+                this.sprite.tint = 0xffffff
                 this.speedModifier = 1
             }
         }
