@@ -16,6 +16,7 @@ class MainMenuScene extends Phaser.Scene {
         console.log('[MainMenu] Creating')
         this.startButton = this.add.image(100, 100, 'test-text').setScale(2).setOrigin(0, 0)
         this.input.on('pointerup', () => this.onStartButtonClicked())
+        this.locked = false;
     }
 
     update(timestamp, elapsed) {
@@ -23,6 +24,11 @@ class MainMenuScene extends Phaser.Scene {
     }
 
     onStartButtonClicked() {
-        this.scene.start('Level')
+        if (this.locked) return
+        this.locked = true
+        this.cameras.main.fadeOut(500)
+        this.cameras.main.on('camerafadeoutcomplete', () => {
+            this.scene.start('Level')
+        });
     }
 }

@@ -39,6 +39,8 @@ class LevelScene extends Phaser.Scene {
 
         this.gameOverStarted = false
         this.gameOverTimer = 0
+
+        this.cameras.main.fadeIn(1000)
     }
 
     update(_, elapsed) {
