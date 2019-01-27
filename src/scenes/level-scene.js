@@ -28,6 +28,7 @@ class LevelScene extends Phaser.Scene {
         this.input.on('pointerup', () => this.onPointerUp())
         this.cameras.main.startFollow(this.player.sprite, false, 0.225, 0.225)
         this.cameras.main.setBounds(-50000, -50000, 100000, 50000)
+        this.scene.launch('HUD')
     }
 
     update(_, elapsed) {

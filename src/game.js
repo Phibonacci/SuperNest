@@ -8,7 +8,7 @@ class Game extends Phaser.Game {
             width: window.innerWidth * window.devicePixelRatio,
             height: window.innerHeight * window.devicePixelRatio,
             // The first scene is loaded automatically upon the game start.
-            scene: [ MainMenuScene, LevelScene ],
+            scene: [ MainMenuScene, LevelScene, HudScene ],
             pixelArt: true,
             physics: {
                 default: 'arcade',
