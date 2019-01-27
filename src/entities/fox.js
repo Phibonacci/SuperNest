@@ -19,11 +19,12 @@ class Fox {
     }
 
     update(scene, player) {
-        if (this.x < player.x + 10 ) {
-            this.setVelocityX(150)
-        } else if (this.x > player.x + 10) {
-            this.setVelocityX(-150)
+        if (this.sprite.x + 10 < player.x) {
+            this.sprite.setVelocityX(150)
+            this.sprite.flipX = true
+        } else if (this.sprite.x - 10 > player.x) {
+            this.sprite.setVelocityX(-150)
+            this.sprite.flipX = false
         }
-
     }
 }
