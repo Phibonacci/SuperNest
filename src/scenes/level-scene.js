@@ -39,8 +39,12 @@ class LevelScene extends Phaser.Scene {
         this.fallingFoods.forEach(food => {
             food.update(elapsed)
             if (!food.isFalling) {
-                this.staticFoods.push(food)
                 this.fallingFoods.splice(this.fallingFoods.indexOf(food), 1)
+                if (food.type === 'egg') {
+                    food.destroy()
+                } else {
+                    this.staticFoods.push(food)
+                }
             }
         })
         this.background.update(this)
@@ -60,10 +64,10 @@ class LevelScene extends Phaser.Scene {
     }
 
     initializeFood() {
-        this.staticFoods = [];
-        this.fallingFoods = [];
+        this.staticFoods = []
+        this.fallingFoods = []
         for (let i = 0; i < 100; ++i) {
-            this.addFood();
+            this.addFood()
         }
     }
 
@@ -94,24 +98,35 @@ class LevelScene extends Phaser.Scene {
     }
 
     giveFood(nestling) {
-        if (nestling.isDead || !this.player.isCarryingItem()) {
+        if (!this.player.isCarryingItem()) {
             return
         }
-        if (this.player.carriedItem.type !== nestling.requestedFood) {
-            return
+        if (nestling.isDead) {
+            if (this.player.carriedItem.type !== 'egg') {
+                return
+            }
+            nestling.revive()
+        } else {
+            if (this.player.carriedItem.type !== nestling.requestedFood) {
+                return
+            }
+            nestling.fillStomach()
         }
-        nestling.fillStomach()
         this.player.deleteItem()
     }
 
     eatFallingFood(nestling, food) {
         if (nestling.isDead) {
-            return
+            if (food.type !== 'egg') {
+                return
+            }
+            nestling.revive()
+        } else {
+            if (food.type !== nestling.requestedFood) {
+                return
+            }
+            nestling.fillStomach()
         }
-        if (food.type !== nestling.requestedFood) {
-            return
-        }
-        nestling.fillStomach()
         let index = this.fallingFoods.indexOf(food)
         if (index >= 0) {
             this.fallingFoods.splice(index, 1)
@@ -120,11 +135,11 @@ class LevelScene extends Phaser.Scene {
     }
 
     onPointerDown() {
-        this.isPointerDown = true;
+        this.isPointerDown = true
     }
 
     onPointerUp() {
-        this.isPointerDown = false;
+        this.isPointerDown = false
         this.dropItem()
     }
 

@@ -54,6 +54,13 @@ class Nestling {
         this.hunger = Phaser.Math.Between(HUNGER_MIN_TIME, HUNGER_MAX_TIME)
     }
 
+    revive() {
+        console.log(`[Nestling ${this.id}] Reviving`)
+        this.isDead = false
+        this.sprite.setTexture('nestling')
+        this.fillStomach()
+    }
+
     askForFood() {
         console.log(`[Nestling ${this.id}] Asking for food`)
         this.isStarving = true;
@@ -70,8 +77,9 @@ class Nestling {
         console.log(`[Nestling ${this.id}] Dying of starvation`)
         this.isDead = true
         this.speechBubble.visible = false
-        this.dangerBubble.visible = false
-        this.foodSprite.visible = false
+        this.dangerBubble.visible = true
+        this.foodSprite.visible = true
+        this.foodSprite.setTexture('egg')
         this.sprite.setTexture('nestling-dead')
     }
 }
