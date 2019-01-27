@@ -33,7 +33,7 @@ class Background {
     }
 
     updateTree(scene) {
-        this.treeImage.y = this.currentAnchor.y  - (this.currentAnchor.y % scene.cameras.main.height) - scene.cameras.main.height / 2
+        this.treeImage.y = this.currentAnchor.y  - (this.currentAnchor.y % 600)
     }
 
     update(scene)  {
