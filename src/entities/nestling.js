@@ -17,7 +17,7 @@ class Nestling {
     constructor(scene, id) {
         this.id = id
         this.scene = scene
-        this.sprite = scene.physics.add.sprite(id * 75, -400, 'nestling')
+        this.sprite = scene.physics.add.sprite(id * 75, -1250, 'nestling')
         this.sprite.depth = -10
         this.speechBubble = scene.add.sprite(this.sprite.x + 30, this.sprite.y - 50, 'speech-bubble')
         this.speechBubble.depth = 10

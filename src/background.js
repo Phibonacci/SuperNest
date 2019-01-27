@@ -5,6 +5,8 @@ class Background {
     static preload(scene) {
         scene.load.image('bg-cloud', 'assets/bg-cloud.png')
         scene.load.image('bg-ground', 'assets/bg-ground.png')
+        scene.load.image('tree', 'assets/tree.png')
+        scene.load.image('branch', 'assets/branch.png')
     }
 
     constructor(scene) {
@@ -14,6 +16,10 @@ class Background {
         this.cloudImage.depth = -1000
         this.groundImage = scene.add.tileSprite(0, -75, scene.cameras.main.width + this.width * 2, this.height, 'bg-ground')
         this.groundImage.depth = -900
+        this.treeImage = scene.add.tileSprite(-150, 0, 320, scene.cameras.main.height * 2, 'tree')
+        this.treeImage.depth = -800
+        this.branchImage = scene.add.tileSprite(150, -1200, 600, 100, 'branch')
+        this.branchImage.depth = -800
         this.currentAnchor = new Phaser.Math.Vector2()
     }
 
@@ -26,9 +32,14 @@ class Background {
         this.groundImage.x = this.currentAnchor.x  - (this.currentAnchor.x % this.width)
     }
 
+    updateTree(scene) {
+        this.treeImage.y = this.currentAnchor.y  - (this.currentAnchor.y % scene.cameras.main.height) - scene.cameras.main.height / 2
+    }
+
     update(scene)  {
         scene.cameras.main.getWorldPoint(this.cloudImage.width / 2,this.cloudImage.height / 2, this.currentAnchor)
         this.updateCloud(scene)
         this.updateGround(scene)
+        this.updateTree(scene)
     }
 }
