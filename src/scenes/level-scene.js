@@ -2,6 +2,7 @@
 'use strict'
 
 const NESTLING_COUNT = 5
+const GAME_OVER_FADEOUT = 3000
 
 class LevelScene extends Phaser.Scene {
     constructor() {
@@ -29,12 +30,22 @@ class LevelScene extends Phaser.Scene {
         this.input.on('pointerdown', () => this.onPointerDown())
         this.input.on('pointerup', () => this.onPointerUp())
         this.scene.launch('HUD')
+
+        this.music = this.sound.add('river-nymphs')
+        this.music.play({ loop: true })
+
+        this.gameOverStarted = false
+        this.gameOverTimer = 0
     }
 
     update(_, elapsed) {
         this.player.update(this)
+        let aliveNestlings = 0
         for (const nestling of this.nestlings) {
             nestling.update(elapsed)
+            if (!nestling.isDead) {
+                aliveNestlings += 1
+            }
         }
         this.fallingFoods.forEach(food => {
             food.update(elapsed)
@@ -48,6 +59,18 @@ class LevelScene extends Phaser.Scene {
             }
         })
         this.background.update(this)
+        if (aliveNestlings == 0 && !this.gameOverStarted) {
+            this.gameOver()
+        }
+        if (this.gameOverStarted) {
+            this.gameOverTimer -= elapsed
+            this.music.volume = this.gameOverTimer / GAME_OVER_FADEOUT
+            if (this.gameOverTimer < 0) {
+                console.log(`[Level] Game over fade done, reloading main menu`)
+                this.music.stop()
+                this.scene.start('MainMenu')
+            }
+        }
     }
 
     initializeNestlings() {
@@ -152,5 +175,13 @@ class LevelScene extends Phaser.Scene {
         item.sprite.x = this.player.carriedItemSprite.x
         item.sprite.y = this.player.carriedItemSprite.y
         console.log(`Dropped item at ${item.sprite.x}, ${item.sprite.y}`)
+    }
+
+    gameOver() {
+        console.log(`[Level] Game over starting`)
+        this.gameOverStarted = true
+        this.gameOverTimer = GAME_OVER_FADEOUT
+        this.cameras.main.fade(GAME_OVER_FADEOUT, 0, 0, 0)
+        this.scene.stop('HUD')
     }
 }

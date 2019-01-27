@@ -8,7 +8,7 @@ class MainMenuScene extends Phaser.Scene {
 
     preload() {
         console.log('[MainMenu] Preloading')
-        // TODO: load the menu assets.
+        this.load.audio('river-nymphs', 'assets/river-nymphs.ogg')
     }
 
     create() {
