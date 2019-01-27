@@ -19,15 +19,15 @@ class LevelScene extends Phaser.Scene {
 
     create() {
         console.log('[Level] Creating')
-        this.background = new Background(this)
         this.player = new Player(this)
         this.cameras.main.zoom = 1.5
+        this.cameras.main.startFollow(this.player.sprite, false, 0.225, 0.225)
+        this.cameras.main.setBounds(-50000, -50000, 100000, 50000)
+        this.background = new Background(this)
         this.initializeNestlings()
         this.initializeFood()
         this.input.on('pointerdown', () => this.onPointerDown())
         this.input.on('pointerup', () => this.onPointerUp())
-        this.cameras.main.startFollow(this.player.sprite, false, 0.225, 0.225)
-        this.cameras.main.setBounds(-50000, -50000, 100000, 50000)
         this.scene.launch('HUD')
     }
 
