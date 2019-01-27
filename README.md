@@ -1,4 +1,4 @@
-# SuperNest
+# Super NESt
 
 It's a game about birds, nests and foxes. Made for the Global Game Jam 2019.
 
