@@ -52,7 +52,7 @@ class Player {
         const vy = Math.sin(this.sprite.rotation)
         this.pointerMove(scene)
 
-        const speed = (3 + vy) * 180
+        const speed = (2.7 + vy) * 170
         Phaser.Physics.Arcade.ArcadePhysics.prototype.velocityFromRotation(this.sprite.rotation, speed, this.sprite.body.velocity)
         this.sprite.flipY = !(Math.abs(this.sprite.rotation) < Math.PI / 2)
         if (this.sprite.y > 0) {
