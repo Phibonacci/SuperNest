@@ -3,11 +3,11 @@
 
 class Player {
     static preload(scene) {
-        scene.load.spritesheet('bird', 'assets/bird-sheet.png', { frameWidth: 32, frameHeight: 32 })
+        scene.load.spritesheet('bird', 'assets/bird-sheet.png', { frameWidth: 64, frameHeight: 64 })
     }
 
     constructor(scene) {
-        this.sprite = scene.physics.add.sprite(0, -400, 'bird').setScale(2)
+        this.sprite = scene.physics.add.sprite(0, -400, 'bird')
         this.carriedItemSprite = scene.physics.add.sprite(0, 0, 'apple')
         this.carriedItemSprite.visible = false
         this.carriedItem = null
