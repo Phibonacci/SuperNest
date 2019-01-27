@@ -5,8 +5,8 @@ class Game extends Phaser.Game {
     constructor() {
         const config = {
             type: Phaser.AUTO,
-            width: window.innerWidth * window.devicePixelRatio,
-            height: window.innerHeight * window.devicePixelRatio,
+            width: 1024,
+            height: 600,
             // The first scene is loaded automatically upon the game start.
             scene: [ MainMenuScene, LevelScene, HudScene ],
             pixelArt: true,
@@ -18,6 +18,6 @@ class Game extends Phaser.Game {
             },
         }
         super(config)
-        
+
     }
 }
