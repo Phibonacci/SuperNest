@@ -13,7 +13,11 @@ class CompassArrow {
     }
 
     update(playerX, playerY) {
-        const orientation = Math.atan2(-playerX, playerY + 1250)
+        const distanceX = Math.abs(playerX - 150)
+        const distanceY = Math.abs(playerY + 1250)
+        this.sprite.visible = distanceX > 500 || distanceY > 200
+
+        const orientation = Math.atan2(-playerX + 150, playerY + 1250)
         this.sprite.rotation = orientation
         const vx = Math.cos(orientation)
         const vy = Math.sin(orientation)
