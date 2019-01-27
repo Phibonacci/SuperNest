@@ -137,7 +137,7 @@ class LevelScene extends Phaser.Scene {
             if (this.player.carriedItem.type !== nestling.requestedFood) {
                 return
             }
-            nestling.fillStomach()
+            nestling.eatFood()
         }
         this.player.deleteItem()
     }
@@ -152,7 +152,7 @@ class LevelScene extends Phaser.Scene {
             if (food.type !== nestling.requestedFood) {
                 return
             }
-            nestling.fillStomach()
+            nestling.eatFood()
         }
         let index = this.fallingFoods.indexOf(food)
         if (index >= 0) {

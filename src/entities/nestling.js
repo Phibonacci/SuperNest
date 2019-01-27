@@ -12,6 +12,11 @@ class Nestling {
         scene.load.image('nestling-dead', 'assets/nestling-dead.png')
         scene.load.image('speech-bubble', 'assets/speech-bubble.png')
         scene.load.image('danger-bubble', 'assets/danger-bubble.png')
+
+        scene.load.audio('nestling-hungry', 'assets/nestling-hungry.wav')
+        scene.load.audio('nestling-eat', 'assets/nestling-eat.wav')
+        scene.load.audio('nestling-ko', 'assets/nestling-ko.wav')
+        scene.load.audio('nestling-revive', 'assets/nestling-revive.wav')
     }
 
     constructor(scene, id) {
@@ -38,6 +43,11 @@ class Nestling {
         this.speechBubble.update()
     }
 
+    eatFood() {
+        this.fillStomach()
+        this.scene.sound.play('nestling-eat')
+    }
+
     fillStomach() {
         console.log(`[Nestling ${this.id}] Filling stomach`)
         this.isStarving = false
@@ -50,6 +60,7 @@ class Nestling {
         this.isDead = false
         this.sprite.setTexture('nestling')
         this.fillStomach()
+        this.scene.sound.play('nestling-revive')
     }
 
     askForFood() {
@@ -58,11 +69,13 @@ class Nestling {
         this.starvationTime = Phaser.Math.Between(STARVATION_MIN_TIME, STARVATION_MAX_TIME)
         this.hunger = this.starvationTime
         this.requestedFood = FRUITS[Phaser.Math.Between(0, FRUITS.length - 1)]
+        this.scene.sound.play('nestling-hungry')
     }
 
     dieOfStarvation() {
         console.log(`[Nestling ${this.id}] Dying of starvation`)
         this.isDead = true
         this.sprite.setTexture('nestling-dead')
+        this.scene.sound.play('nestling-ko')
     }
 }
