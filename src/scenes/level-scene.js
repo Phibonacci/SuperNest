@@ -16,6 +16,8 @@ class LevelScene extends Phaser.Scene {
         Nestling.preload(this)
         Player.preload(this)
         Food.preload(this)
+        this.load.audio('take-item', 'assets/take-item.wav')
+        this.load.audio('drop-item', 'assets/drop-item.wav')
     }
 
     create() {
@@ -31,7 +33,7 @@ class LevelScene extends Phaser.Scene {
         this.input.on('pointerup', () => this.onPointerUp())
         this.scene.launch('HUD')
 
-        this.music = this.sound.add('river-nymphs')
+        this.music = this.sound.add('river-nymphs', { volume: 0.3 })
         this.music.play({ loop: true })
 
         this.gameOverStarted = false
@@ -111,12 +113,14 @@ class LevelScene extends Phaser.Scene {
         if (index >= 0) {
             this.staticFoods.splice(index, 1)
             this.player.takeItem(food)
+            this.sound.play('take-item')
             return
         }
         index = this.fallingFoods.indexOf(food)
         if (index >= 0) {
             this.fallingFoods.splice(index, 1)
             this.player.takeItem(food)
+            this.sound.play('take-item')
         }
     }
 
@@ -175,6 +179,7 @@ class LevelScene extends Phaser.Scene {
         item.sprite.x = this.player.carriedItemSprite.x
         item.sprite.y = this.player.carriedItemSprite.y
         console.log(`Dropped item at ${item.sprite.x}, ${item.sprite.y}`)
+        this.sound.play('drop-item')
     }
 
     gameOver() {
