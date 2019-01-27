@@ -34,6 +34,8 @@ class MainMenuScene extends Phaser.Scene {
 
         this.input.on('pointerup', () => this.onPointerUp())
         this.locked = false;
+
+        this.cameras.main.fadeIn(500)
     }
 
     update(_, elapsed) {
