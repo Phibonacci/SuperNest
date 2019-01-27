@@ -36,11 +36,6 @@ class LevelScene extends Phaser.Scene {
         }
         //this.cameras.main.centerOn(this.player.x, this.player.y)
         this.foods.forEach(food => food.update(elapsed))
-        this.tempNestlingTimer += elapsed;
-        if (this.tempNestlingTimer > 1400) {
-            this.tempNestlingTimer = 0
-            this.addNestling()
-        }
         this.background.update(this)
     }
 
