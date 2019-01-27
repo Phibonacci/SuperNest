@@ -11,6 +11,8 @@ class Player {
         this.carriedItemSprite = scene.physics.add.sprite(0, 0, 'apple')
         this.carriedItemSprite.visible = false
         this.carriedItem = null
+        this.slowTimer = 0
+        this.speedModifier = 1
 
         scene.anims.create({
             key: 'fly',
@@ -39,6 +41,12 @@ class Player {
         }
     }
 
+    impact() {
+        this.slowTimer = 3000
+        this.speedModifier = 0.4
+        console.log("slow")
+    }
+
     get x() {
         return this.sprite.x
     }
@@ -47,12 +55,19 @@ class Player {
         return this.sprite.y
     }
 
-    update(scene) {
+    update(scene, elapsed) {
+        if (this.slowTimer > 0) {
+            this.slowTimer -= elapsed
+            if (this.slowTimer <= 0) {
+                this.speedModifier = 1
+            }
+        }
+
         const vx = Math.cos(this.sprite.rotation)
         const vy = Math.sin(this.sprite.rotation)
         this.pointerMove(scene)
 
-        const speed = (2.7 + vy) * 170
+        const speed = (2.7 + vy) * 170 * this.speedModifier
         Phaser.Physics.Arcade.ArcadePhysics.prototype.velocityFromRotation(this.sprite.rotation, speed, this.sprite.body.velocity)
         this.sprite.flipY = !(Math.abs(this.sprite.rotation) < Math.PI / 2)
         if (this.sprite.y > 0) {
