@@ -16,8 +16,17 @@ class Game extends Phaser.Game {
                   debug: false,
                 },
             },
+            callbacks: {
+                postBoot: () => {
+                    this.canvas.style.width = '100%'
+                    this.canvas.style.height = '100%'
+                    this.canvas.style.objectFit = 'contain'
+                    window.addEventListener('resize', () => {
+                        console.log('resized')
+                    })
+                }
+            }
         }
         super(config)
-
     }
 }

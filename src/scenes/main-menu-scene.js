@@ -16,11 +16,9 @@ class MainMenuScene extends Phaser.Scene {
         this.add.text(100, 50, 'Super NESt', { fill: '#fff' })
 
         // TODO: create a button class if we intend to have multiple buttons.
-        this.startButton = this.add.text(100, 100, '[ Click to Start ]', { fill: '#fff' })
+        this.startButton = this.add.text(100, 100, '[ Click anywhere to Start ]', { fill: '#fff' })
         this.startButton.setInteractive({ useHandCursor: true })
-        this.startButton.on('pointerup', () => this.onStartButtonClicked())
-        this.startButton.on('pointerover', () => this.onStartButtonHover())
-        this.startButton.on('pointerout', () => this.onStartButtonLeave())
+        this.input.on('pointerup', () => this.onStartButtonClicked())
     }
 
     update(timestamp, elapsed) {
@@ -29,13 +27,5 @@ class MainMenuScene extends Phaser.Scene {
 
     onStartButtonClicked() {
         this.scene.start('Level')
-    }
-
-    onStartButtonHover() {
-        this.startButton.setStyle({ fill: '#f00' })
-    }
-
-    onStartButtonLeave() {
-        this.startButton.setStyle({ fill: '#fff' })
     }
 }
