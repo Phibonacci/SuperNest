@@ -21,9 +21,6 @@ class Game extends Phaser.Game {
                     this.canvas.style.width = '100%'
                     this.canvas.style.height = '100%'
                     this.canvas.style.objectFit = 'contain'
-                    window.addEventListener('resize', () => {
-                        console.log('resized')
-                    })
                 }
             }
         }
