@@ -19,9 +19,9 @@ class HudScene extends Phaser.Scene {
         this.player = this.level.player
         this.compass = new CompassArrow(this)
 
-        var rect = new Phaser.Geom.Rectangle(640, 0, 1024 - 640, 100);
-        var graphics = this.add.graphics({ fillStyle: { color: 0x000000, alpha: 0.5 } });
-        graphics.fillRectShape(rect);
+        const rect = new Phaser.Geom.Rectangle(640, 0, 1024 - 640, 100)
+        const graphics = this.add.graphics({ fillStyle: { color: 0x000000, alpha: 0.5 } })
+        graphics.fillRectShape(rect)
 
         this.nestlingHeads = []
         this.speechBubbles = []
