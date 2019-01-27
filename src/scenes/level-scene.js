@@ -15,6 +15,7 @@ class LevelScene extends Phaser.Scene {
         Background.preload(this)
         Nestling.preload(this)
         Player.preload(this)
+        Fox.preload(this)
         Food.preload(this)
         this.load.image('small-tree', 'assets/small-tree.png')
         this.load.audio('take-item', 'assets/take-item.wav')
@@ -24,6 +25,7 @@ class LevelScene extends Phaser.Scene {
     create() {
         console.log('[Level] Creating')
         this.player = new Player(this)
+        this.fox = new Fox(this)
         this.cameras.main.zoom = 1.5
         this.cameras.main.startFollow(this.player.sprite, false, 0.225, 0.225)
         this.cameras.main.setBounds(-50000, -50000, 100000, 50000)
@@ -45,6 +47,7 @@ class LevelScene extends Phaser.Scene {
 
     update(_, elapsed) {
         this.player.update(this)
+        this.fox.update(this, this.player)
         let aliveNestlings = 0
         for (const nestling of this.nestlings) {
             nestling.update(elapsed)
